@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import Form from "./components/Form";
+import List from "./components/List";
+import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [tasks, settasks] = useState([]);
+
+  const addTask = (task) => {
+    settasks(tasks.concat({ value: task.value, isDone: false }));
+  };
+
+  const removeTask = (e, index) => {
+    settasks(tasks.filter((item, idx) => idx !== index));
+  };
+
+  const checkTask = (e, index) => {
+    const newArr = [...tasks];
+    newArr[index].isDone = !newArr[index].isDone;
+    settasks(newArr);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <List removeTask={removeTask} tasks={tasks} checkTask={checkTask} />
+      <Form addTask={addTask} />
     </div>
   );
 }
