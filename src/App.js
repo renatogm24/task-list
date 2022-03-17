@@ -4,20 +4,28 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [tasks, settasks] = useState([]);
+  const initialTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  console.log(initialTasks);
+
+  const [tasks, settasks] = useState(initialTasks);
 
   const addTask = (task) => {
-    settasks(tasks.concat({ value: task.value, isDone: false }));
+    const newTasks = tasks.concat({ value: task.value, isDone: false });
+    settasks(newTasks);
+    localStorage.setItem("tasks", JSON.stringify(newTasks));
   };
 
   const removeTask = (e, index) => {
-    settasks(tasks.filter((item, idx) => idx !== index));
+    const newTasks = tasks.filter((item, idx) => idx !== index);
+    settasks(newTasks);
+    localStorage.setItem("tasks", JSON.stringify(newTasks));
   };
 
   const checkTask = (e, index) => {
     const newArr = [...tasks];
     newArr[index].isDone = !newArr[index].isDone;
     settasks(newArr);
+    localStorage.setItem("tasks", JSON.stringify(newArr));
   };
 
   return (

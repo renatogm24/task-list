@@ -14,6 +14,7 @@ const List = ({ tasks, removeTask, checkTask }) => {
               name="checkbox"
               id="checkbox"
               value={task.isDone}
+              checked={task.isDone}
               onChange={(e) => checkTask(e, idx)}
             />
             <Button
